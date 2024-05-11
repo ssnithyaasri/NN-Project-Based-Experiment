@@ -115,7 +115,7 @@ plt.imshow(img_28_gray_scaled.reshape(28,28),cmap='gray')
 
 ![328275289-1e22e392-f1e5-4ede-aaa9-4858ca8a7a49](https://github.com/ssnithyaasri/NN-Project-Based-Experiment/assets/119122478/36dc5bf9-dd60-460a-a62f-142f97fab2d1)
 
-##Result :
+## Result :
 Thus, a Multilayer Perceptron (MLP) to classify handwritten digits in python is build.
 
 
