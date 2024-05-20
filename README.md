@@ -1,4 +1,4 @@
-## Project Based Experiments
+# Project Based Experiments
 ## Objective :
  Build a Multilayer Perceptron (MLP) to classify handwritten digits in python
 ## Steps to follow:
@@ -28,8 +28,10 @@ If the model is not performing well, experiment with different architectures, re
 Visualize the training/validation loss and accuracy over epochs to understand the training process. Visualize some misclassified examples to gain insights into potential improvements.
 
 # Program:
-Name:NITHYAA SRI S S
-REGISTER NO:212222230100
+```
+NAME :NITHYAA SRI S S
+REG NO:212222230100
+```
 ```
 import numpy as np
 from tensorflow import keras
@@ -43,8 +45,7 @@ from sklearn.metrics import classification_report,confusion_matrix
 from tensorflow.keras.preprocessing import image
 
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
-
-X_train.shape
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
 X_test.shape
 single_image= X_train[0]
 single_image.shape
@@ -54,7 +55,6 @@ X_train.min()
 X_train.max()
 X_train_scaled = X_train/255.0
 X_test_scaled = X_test/255.0
-
 X_train_scaled.min()
 X_train_scaled.max()
 y_train[0]
@@ -65,36 +65,40 @@ y_train_onehot.shape
 single_image = X_train[500]
 plt.imshow(single_image,cmap='gray')
 y_train_onehot[500]
+
 X_train_scaled = X_train_scaled.reshape(-1,28,28,1)
 X_test_scaled = X_test_scaled.reshape(-1,28,28,1)
 
 model = keras.Sequential()
 model.add(layers.Input(shape=(28,28,1)))
-model.add(layers.Conv2D(filters=32,kernel_size=(3,3),activation='relu'))
-model.add(layers.MaxPool2D(pool_size=(2,2)))
+model.add(layers.Conv2D(filters=32,kernel_size=(5,5),activation='relu'))
+model.add(layers.MaxPool2D(pool_size=(3,3)))
 model.add(layers.Flatten())
 model.add(layers.Dense(32,activation='relu'))
-model.add(layers.Dense(64,activation='relu'))
+model.add(layers.Dense(16,activation='relu'))
 model.add(layers.Dense(10,activation='softmax'))
 
 model.summary()
+# Choose the appropriate parameters
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               metrics='accuracy')
-model.fit(X_train_scaled ,y_train_onehot, epochs=5,
-          batch_size=64,
-          validation_data=(X_test_scaled,y_test_onehot))
 metrics = pd.DataFrame(model.history.history)
 metrics.head()
 metrics[['accuracy','val_accuracy']].plot()
+
 metrics[['loss','val_loss']].plot()
 x_test_predictions = np.argmax(model.predict(X_test_scaled), axis=1)
+
 print(confusion_matrix(y_test,x_test_predictions))
+
 print(classification_report(y_test,x_test_predictions))
 
-img = image.load_img('img6n.png')
+#Prediction for a single input
+
+img = image.load_img('imagethree.png')
 type(img)
-img = image.load_img('img6n.png')
+img = image.load_img('imagethree.png')
 img_tensor = tf.convert_to_tensor(np.asarray(img))
 img_28 = tf.image.resize(img_tensor,(28,28))
 img_28_gray = tf.image.rgb_to_grayscale(img_28)
@@ -103,24 +107,32 @@ x_single_prediction = np.argmax(
     model.predict(img_28_gray_scaled.reshape(1,28,28,1)),
      axis=1)
 print(x_single_prediction)
-plt.imshow(img_28_gray_scaled.reshape(28,28),cmap='gray')
 
+plt.imshow(img_28_gray_scaled.reshape(28,28),cmap='gray')
+img_28_gray_inverted = 255.0-img_28_gray
+img_28_gray_inverted_scaled = img_28_gray_inverted.numpy()/255.0
+x_single_prediction = np.argmax(
+    model.predict(img_28_gray_inverted_scaled.reshape(1,28,28,1)),
+     axis=1)
+
+print(x_single_prediction)
 ```
 
 ## Output:
-![328274736-5ed77403-e1d2-41b7-9cf0-cab6464c3d37](https://github.com/ssnithyaasri/NN-Project-Based-Experiment/assets/119122478/2c3a9a80-62e9-47b9-a622-ecac275ee75d)
-![328274918-cf647d81-c234-403f-a77b-bb5219304f76](https://github.com/ssnithyaasri/NN-Project-Based-Experiment/assets/119122478/1e456f4d-a6f2-4326-a170-da589ec5cb5c)
-![328275041-d7a98bb4-f103-429d-a512-b27c8f033b91](https://github.com/ssnithyaasri/NN-Project-Based-Experiment/assets/119122478/27ef6afa-a98a-49a6-b876-6771a4cb7b2c)
-![328275173-38aafc0e-7d91-4d67-9b43-632eaa191be5](https://github.com/ssnithyaasri/NN-Project-Based-Experiment/assets/119122478/4b73dcfa-8f59-4366-8107-b8f6fe96d856)
+### Training Loss, Validation Loss Vs Iteration Plot
 
-![328275289-1e22e392-f1e5-4ede-aaa9-4858ca8a7a49](https://github.com/ssnithyaasri/NN-Project-Based-Experiment/assets/119122478/36dc5bf9-dd60-460a-a62f-142f97fab2d1)
+![327069562-0ca2a8a6-c073-4614-a79e-f3b6e3014c51](https://github.com/abinayasangeetha/NN-Project-Based-Experiment/assets/119393675/b683f629-1fc8-4fc5-bf91-192da545f14e)
 
-## Result :
-Thus, a Multilayer Perceptron (MLP) to classify handwritten digits in python is build.
+![327069586-03736eca-8502-4e67-b5a2-1233738be049](https://github.com/abinayasangeetha/NN-Project-Based-Experiment/assets/119393675/901dbabb-6b82-4a1c-9790-b840d2ca8fb2)
+
+![327069609-c7075e62-7db0-460d-95b9-bf6c8b99ea9e](https://github.com/abinayasangeetha/NN-Project-Based-Experiment/assets/119393675/f376d759-8dea-41ca-9c19-4f015ed817e4)
 
 
+### Classification Report
+![327069635-0774dbd6-a9dd-4199-971d-e9c0d41ece15](https://github.com/abinayasangeetha/NN-Project-Based-Experiment/assets/119393675/36def1b2-ceaa-4c12-9c60-a3563e392f16)
 
+### Confusion Matrix
+![327069658-2a5ace8b-d6e6-4c0e-ac5c-ecd2fa5b6153](https://github.com/abinayasangeetha/NN-Project-Based-Experiment/assets/119393675/94eee210-df6d-4c07-9847-5b3184094085)
 
-
-
-
+### New Sample Data Prediction
+![327069694-a2ed5912-f555-415f-adf5-144a0b5dd14a](https://github.com/abinayasangeetha/NN-Project-Based-Experiment/assets/119393675/37795227-67d1-42c9-a2b0-e4be957e7658)
